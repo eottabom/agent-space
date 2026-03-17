@@ -39,15 +39,6 @@ npm run dev
 
 브라우저에서 `http://localhost:5173` 접속.
 
-### Docker Compose (개발용)
-
-```bash
-docker compose up
-```
-
-`host` 네트워크 모드로 실행되며, 호스트에 설치된 CLI 에이전트를 그대로 사용한다.
-브라우저에서 `http://localhost:5173` 접속.
-
 ## 프로젝트 구조
 
 ```
@@ -63,6 +54,5 @@ agent-space/
 │       ├── components/       UI 컴포넌트
 │       ├── hooks/            WebSocket, 터미널 훅
 │       ├── store/            세션 상태 관리
-│       └── types/            타입 정의
-└── docs/ai/          아키텍처, 스타일 가이드
+        └── types/            타입 정의
 ```
