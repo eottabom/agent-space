@@ -49,10 +49,10 @@ agent-space/
 │       ├── domain/           모델, 서비스, 리포지토리 인터페이스
 │       ├── infrastructure/   JPA, PTY, WebSocket 구현
 │       └── presentation/     WebSocket 핸들러
-├── frontend/         React 프론트엔드
-│   └── src/
-│       ├── components/       UI 컴포넌트
-│       ├── hooks/            WebSocket, 터미널 훅
-│       ├── store/            세션 상태 관리
+└── frontend/         React 프론트엔드
+    └── src/
+        ├── components/       UI 컴포넌트
+        ├── hooks/            WebSocket, 터미널 훅
+        ├── store/            세션 상태 관리
         └── types/            타입 정의
 ```
