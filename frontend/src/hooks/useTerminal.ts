@@ -13,6 +13,15 @@ interface UseTerminalOptions {
   onOutput?: () => void
 }
 
+function isTerminalResponse(dataChunk: string): boolean {
+  if (!dataChunk.startsWith('\u001b[')) {
+    return false
+  }
+
+  const body = dataChunk.slice(2)
+  return /^[?0-9;]*[cnR]$/.test(body)
+}
+
 export function useTerminal({ sessionId, connected, send, addHandler, onOutput }: UseTerminalOptions) {
   const terminalRef = useRef<HTMLDivElement | null>(null)
   const xtermRef = useRef<Terminal | null>(null)
@@ -103,9 +112,8 @@ export function useTerminal({ sessionId, connected, send, addHandler, onOutput }
     })
 
     // User input -> backend
-    const termResponseRe = /^\x1b\[[\?>]?[\d;]*[cnR]$/
     const inputDisposable = term.onData((dataChunk) => {
-      if (termResponseRe.test(dataChunk)) return
+      if (isTerminalResponse(dataChunk)) return
       const encoded = btoa(
         new Uint8Array(new TextEncoder().encode(dataChunk))
           .reduce((acc, byte) => acc + String.fromCharCode(byte), '')

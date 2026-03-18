@@ -42,3 +42,5 @@ docs/development.md
 
 # Test artifacts
 test.png
+frontend/playwright-report/
+frontend/test-results/

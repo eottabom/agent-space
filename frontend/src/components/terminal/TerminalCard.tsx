@@ -68,11 +68,15 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
       : 'bg-orange-900/50 text-orange-400'
 
   return (
-    <div className="flex flex-col rounded-lg border border-[#1e2a3a] bg-[#0a1018] overflow-hidden">
+    <div
+      className="flex flex-col rounded-lg border border-[#1e2a3a] bg-[#0a1018] overflow-hidden"
+      data-testid={`terminal-card-${session.id}`}
+    >
       {/* Header */}
       <div className="flex items-center gap-2 px-3 py-2 border-b border-[#1e2a3a] bg-[#0d1520]">
         <button
           onClick={onMinimize}
+          data-testid={`minimize-terminal-${session.id}`}
           className="w-4 h-4 rounded border border-[#2a3a4a] bg-transparent flex items-center justify-center text-gray-500 hover:text-gray-300 hover:border-gray-400 transition-colors cursor-pointer"
           title="Minimize"
         >
@@ -115,10 +119,11 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
 
         <div className="ml-auto flex items-center gap-2">
           <Badge className={cn("text-[10px] px-2 py-0 font-medium border-0", statusClass)}>
-            {statusLabel}
+            <span data-testid={`terminal-status-${session.id}`}>{statusLabel}</span>
           </Badge>
           <button
             onClick={onKill}
+            data-testid={`kill-terminal-${session.id}`}
             className="text-gray-500 hover:text-red-400 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />

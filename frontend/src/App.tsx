@@ -47,6 +47,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    const timers = removeTimers.current
     const remove = addHandler((message: WsMessage) => {
       switch (message.type) {
         case MessageTypes.SESSION_STARTED: {
@@ -139,8 +140,8 @@ export default function App() {
     })
     return () => {
       remove()
-      removeTimers.current.forEach(clearTimeout)
-      removeTimers.current.clear()
+      timers.forEach(clearTimeout)
+      timers.clear()
     }
   }, [addHandler, store.avatars, store.sessions])
 

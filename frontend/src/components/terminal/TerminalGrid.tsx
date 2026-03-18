@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { TerminalCard } from './TerminalCard'
 import { MinimizedDock } from './MinimizedDock'
 import { useSessionStore } from '@/store/sessionStore'
@@ -17,16 +17,13 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
 
   const sessions = Array.from(store.sessions.values()).filter(s => s.alive || s.state === 'RUNNING')
 
-  useEffect(() => {
-    setMinimizedIds(prev => {
-      const alive = new Set(sessions.map(s => s.id))
-      const next = new Set([...prev].filter(id => alive.has(id)))
-      return next.size === prev.size ? prev : next
-    })
-  }, [sessions.length])
+  const visibleMinimizedIds = useMemo(() => {
+    const aliveIds = new Set(sessions.map((session) => session.id))
+    return new Set([...minimizedIds].filter((id) => aliveIds.has(id)))
+  }, [minimizedIds, sessions])
 
-  const activeSessions = sessions.filter(s => !minimizedIds.has(s.id))
-  const minimizedSessions = sessions.filter(s => minimizedIds.has(s.id))
+  const activeSessions = sessions.filter(s => !visibleMinimizedIds.has(s.id))
+  const minimizedSessions = sessions.filter(s => visibleMinimizedIds.has(s.id))
 
   const handleMinimize = useCallback((id: string) => {
     setMinimizedIds(prev => new Set(prev).add(id))

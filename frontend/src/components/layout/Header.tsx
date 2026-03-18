@@ -30,6 +30,7 @@ export function Header({ connected, cwd, onCwdChange, onAgentClick }: HeaderProp
         onChange={(event) => onCwdChange(event.target.value)}
         placeholder="Working directory (optional)"
         className="max-w-[280px] h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300 placeholder:text-gray-600"
+        data-testid="cwd-input"
       />
 
       <div className="flex items-center gap-2 ml-auto">
@@ -38,6 +39,7 @@ export function Header({ connected, cwd, onCwdChange, onAgentClick }: HeaderProp
             key={agent.id}
             size="sm"
             className="h-8 text-xs font-medium px-3"
+            data-testid={`launch-agent-${agent.id}`}
             style={{
               backgroundColor: agent.color + '20',
               color: agent.color,

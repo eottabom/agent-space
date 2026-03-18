@@ -80,7 +80,7 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent onClose={onClose} className="bg-[#0d1520] border-[#1e2a3a]">
+      <DialogContent onClose={onClose} className="bg-[#0d1520] border-[#1e2a3a]" data-testid="create-session-modal">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
@@ -97,6 +97,7 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
               placeholder={isBash ? 'e.g. build-server' : `e.g. my-${agentId}-agent`}
               className="h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300"
               autoFocus={isBash}
+              data-testid="session-alias-input"
             />
             <p className="text-[10px] text-gray-600">Leave empty for auto-generated alias</p>
           </div>
@@ -110,6 +111,7 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
                   onChange={(e) => setCwd(e.target.value)}
                   placeholder="/path/to/project"
                   className="h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300"
+                  data-testid="session-cwd-input"
                 />
               </div>
 
@@ -136,6 +138,7 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
                   onChange={(e) => setArgsStr(e.target.value)}
                   placeholder="e.g. --model opus"
                   className="h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300"
+                  data-testid="session-args-input"
                 />
               </div>
             </>
@@ -143,10 +146,12 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
 
           <div className="flex justify-end gap-2 pt-2">
             <Button type="button" variant="outline" size="sm" onClick={onClose}
+              data-testid="cancel-session-button"
               className="border-[#2a3a4a] text-gray-400 hover:bg-[#1a2535]">
               Cancel
             </Button>
             <Button type="submit" size="sm"
+              data-testid="submit-session-button"
               style={{ backgroundColor: color, color: '#fff' }}>
               Launch
             </Button>

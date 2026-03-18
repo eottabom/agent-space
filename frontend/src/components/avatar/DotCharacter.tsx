@@ -33,6 +33,11 @@ function getCharacterStyle(sessionId: string): string {
   return CHARACTER_STYLES[Math.abs(hash) % CHARACTER_STYLES.length]
 }
 
+function getRandomLabel(action: ActionName): string {
+  const labels = RANDOM_LABELS[action] || []
+  return labels.length > 0 ? labels[Math.floor(Math.random() * labels.length)] : ''
+}
+
 export function DotCharacter({ avatar, alias, sessionId, agentId }: DotCharacterProps) {
   const color = AGENT_COLORS[agentId] || '#888'
   const isActive = avatar.state === 'WORKING' || avatar.state === 'THINKING' || avatar.state === 'MOVING'
@@ -45,18 +50,25 @@ export function DotCharacter({ avatar, alias, sessionId, agentId }: DotCharacter
 
   useEffect(() => {
     const action = (avatar.action as ActionName) || 'RESTING'
-    setDisplayAction(action)
-    if (!isAnimal) {
-      const labels = RANDOM_LABELS[action] || []
-      setDisplayLabel(labels.length > 0 ? labels[Math.floor(Math.random() * labels.length)] : '')
-    }
+    const syncTimer = window.setTimeout(() => {
+      setDisplayAction(action)
+      if (!isAnimal) {
+        setDisplayLabel(getRandomLabel(action))
+      }
+    }, 0)
+
+    return () => clearTimeout(syncTimer)
   }, [avatar.action, isAnimal])
 
   useEffect(() => {
     if (!isActive) {
       if (prevActiveRef.current) {
-        setDisplayAction('RESTING')
-        setDisplayLabel('')
+        const resetTimer = window.setTimeout(() => {
+          setDisplayAction('RESTING')
+          setDisplayLabel('')
+        }, 0)
+        prevActiveRef.current = isActive
+        return () => clearTimeout(resetTimer)
       }
       prevActiveRef.current = isActive
       return
@@ -68,8 +80,7 @@ export function DotCharacter({ avatar, alias, sessionId, agentId }: DotCharacter
       const action = RANDOM_ACTIONS[idx]
       setDisplayAction(action)
       if (!isAnimal) {
-        const labels = RANDOM_LABELS[action] || []
-        setDisplayLabel(labels.length > 0 ? labels[Math.floor(Math.random() * labels.length)] : '')
+        setDisplayLabel(getRandomLabel(action))
       }
     }
 

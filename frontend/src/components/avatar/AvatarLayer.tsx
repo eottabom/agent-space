@@ -84,20 +84,26 @@ export function AvatarLayer() {
     }
     if (newlyTraveling.length === 0) return
 
-    setTravelingIds((prev) => {
-      const next = new Set(prev)
-      newlyTraveling.forEach((id) => next.add(id))
-      return next
-    })
+    const addTimer = window.setTimeout(() => {
+      setTravelingIds((prev) => {
+        const next = new Set(prev)
+        newlyTraveling.forEach((id) => next.add(id))
+        return next
+      })
+    }, 0)
 
-    const timer = setTimeout(() => {
+    const removeTimer = window.setTimeout(() => {
       setTravelingIds((prev) => {
         const next = new Set(prev)
         newlyTraveling.forEach((id) => next.delete(id))
         return next
       })
     }, WALK_DURATION * 1000 + 200)
-    return () => clearTimeout(timer)
+
+    return () => {
+      clearTimeout(addTimer)
+      clearTimeout(removeTimer)
+    }
   }, [sessionAvatars])
 
   if (aliveSessions.length === 0) return null
@@ -109,6 +115,7 @@ export function AvatarLayer() {
       ref={containerRef}
       className="relative w-full border-b border-[#1a2535] bg-[#0a1220]/80 overflow-hidden"
       style={{ minHeight: 120 }}
+      data-testid="avatar-layer"
     >
       <div className="absolute top-2 left-4">
         <span className="text-[7px] uppercase tracking-widest text-gray-600 font-mono">idle</span>
@@ -131,6 +138,9 @@ export function AvatarLayer() {
           <div
             key={session.id}
             className="absolute bottom-2"
+            data-testid={`avatar-${session.id}`}
+            data-zone={avatar.zone}
+            data-state={isTraveling ? 'MOVING' : avatar.state}
             style={{
               left: 0,
               transform: `translateX(${x}px)`,
