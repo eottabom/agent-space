@@ -37,5 +37,8 @@ AGENTS.md
 CLAUDE.md
 docs/ai/
 
+# 내부 개발 문서
+docs/development.md
+
 # Test artifacts
 test.png

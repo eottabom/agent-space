@@ -3,6 +3,10 @@ import { startServer } from './index'
 
 const WINDOW_WIDTH = 1440
 const WINDOW_HEIGHT = 900
+// 개발 시 고정 포트 — 디버깅 편의를 위해 항상 같은 포트를 사용한다.
+// 패키징 배포 시 0 을 지정하면 OS 가 빈 포트를 자동 할당한다 (포트 충돌 없음).
+const DEV_PORT = 3000
+const PACKAGED_PORT = 0
 
 let mainWindow: BrowserWindow | null = null
 
@@ -32,7 +36,7 @@ function createWindow(port: number): void {
 }
 
 app.whenReady().then(async () => {
-    const port = await startServer()
+    const port = await startServer(app.isPackaged ? PACKAGED_PORT : DEV_PORT)
     createWindow(port)
 
     // macOS: 독 아이콘 클릭 시 윈도우 재생성
