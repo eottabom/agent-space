@@ -42,6 +42,26 @@ const FRONTEND_DIST = resolveFrontendDist()
 const LOGIN_SHELL = process.env.SHELL || '/bin/bash'
 
 /**
+ * 패키징된 Electron 앱은 Finder 에서 실행 시 PATH 가 매우 제한적이다.
+ * 로그인 쉘을 통해 사용자의 실제 PATH 를 가져와 process.env 에 보강한다.
+ */
+function ensureFullPath(): void {
+    try {
+        const shellPath = execSync(`${LOGIN_SHELL} -l -c 'echo $PATH'`, {
+            encoding: 'utf8',
+            timeout: 5000,
+        }).trim()
+        if (shellPath) {
+            process.env.PATH = shellPath
+        }
+    } catch {
+        // 실패 시 기존 PATH 유지
+    }
+}
+
+ensureFullPath()
+
+/**
  * 로그인 쉘을 통해 커맨드의 절대 경로를 조회한다.
  * Node.js 프로세스 PATH 와 인터랙티브 쉘 PATH 가 다를 때 (nvm, homebrew 등)
  * posix_spawnp 실패를 방지하기 위해 사용한다.
