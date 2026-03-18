@@ -1,14 +1,6 @@
 name: 🚀 Release
 
 on:
-  push:
-    tags:
-      - "v*"
-  workflow_run:
-    workflows:
-      - "🚀 Version Bump"
-    types:
-      - completed
   workflow_dispatch:
     inputs:
       tag:
@@ -21,7 +13,6 @@ permissions:
 
 jobs:
   prepare:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.resolve.outputs.tag }}
@@ -30,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
+          ref: ${{ github.ref }}
 
       - name: Resolve release tag
         id: resolve
@@ -38,15 +29,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            TAG="${{ inputs.tag }}"
-          elif [ "${{ github.event_name }}" = "workflow_run" ]; then
-            VERSION="$(node node-backend/scripts/version.js read)"
-            TAG="v${VERSION}"
-          else
-            TAG="${GITHUB_REF_NAME}"
-          fi
-
+          TAG="${{ inputs.tag }}"
           TAG="$(echo "$TAG" | xargs)"
           test -n "$TAG"
           git fetch --tags --force
@@ -71,9 +54,6 @@ jobs:
           - os: windows-latest
             artifact_glob: "node-backend/electron-dist/*.exe"
     runs-on: ${{ matrix.os }}
-    env:
-      PYTHON: ${{ steps.setup-python.outputs.python-path }}
-      npm_config_python: ${{ steps.setup-python.outputs.python-path }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -98,6 +78,8 @@ jobs:
 
       - name: Show Python version
         shell: bash
+        env:
+          PYTHON: ${{ steps.setup-python.outputs.python-path }}
         run: |
           set -euo pipefail
           echo "PYTHON=${PYTHON}"
@@ -126,6 +108,9 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: node-backend
+        env:
+          PYTHON: ${{ steps.setup-python.outputs.python-path }}
+          npm_config_python: ${{ steps.setup-python.outputs.python-path }}
         run: npm ci
 
       - name: Build frontend
@@ -134,6 +119,9 @@ jobs:
 
       - name: Build Electron package
         working-directory: node-backend
+        env:
+          PYTHON: ${{ steps.setup-python.outputs.python-path }}
+          npm_config_python: ${{ steps.setup-python.outputs.python-path }}
         run: |
           npm run build
           npx electron-builder --publish never
