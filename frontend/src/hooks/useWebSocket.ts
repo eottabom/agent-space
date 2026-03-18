@@ -7,7 +7,7 @@ export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null)
   const handlersRef = useRef<Set<MessageHandler>>(new Set())
   const [connected, setConnected] = useState(false)
-  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const reconnectDelayRef = useRef(1000)
   const pendingRef = useRef<string[]>([])
 

@@ -9,7 +9,7 @@ interface UseTerminalOptions {
   sessionId: string
   connected: boolean
   send: (msg: WsMessage) => void
-  addHandler: (handler: (msg: WsMessage) => () => void) => () => void
+  addHandler: (handler: (msg: WsMessage) => void) => () => void
   onOutput?: () => void
 }
 

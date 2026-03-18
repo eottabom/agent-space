@@ -215,7 +215,7 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
         state: 'active',
         action: 'thinking',
         message: `${agentId} 시작됨`,
-        zone: 'terminal',
+        zone: 'WORKING_ZONE',
     })
 
     ptyProcess.onData((data: string) => {
@@ -240,7 +240,7 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
             state: 'idle',
             action: 'idle',
             message: `${agentId} 종료됨`,
-            zone: 'terminal',
+            zone: 'IDLE_ZONE',
         })
     })
 
