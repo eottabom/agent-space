@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - "v*"
+  workflow_run:
+    workflows:
+      - "🚀 Version Bump"
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       tag:
@@ -15,7 +20,46 @@ permissions:
   contents: write
 
 jobs:
+  prepare:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.resolve.outputs.tag }}
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
+
+      - name: Resolve release tag
+        id: resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          elif [ "${{ github.event_name }}" = "workflow_run" ]; then
+            VERSION="$(node node-backend/scripts/version.js read)"
+            TAG="v${VERSION}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+
+          TAG="$(echo "$TAG" | xargs)"
+          test -n "$TAG"
+          git fetch --tags --force
+          git rev-parse -q --verify "refs/tags/$TAG" >/dev/null || {
+            echo "Tag not found: $TAG"
+            exit 1
+          }
+
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: prepare
+    if: ${{ needs.prepare.result == 'success' }}
     strategy:
       fail-fast: false
       matrix:
@@ -27,12 +71,15 @@ jobs:
           - os: windows-latest
             artifact_glob: "node-backend/electron-dist/*.exe"
     runs-on: ${{ matrix.os }}
+    env:
+      PYTHON: ${{ steps.setup-python.outputs.python-path }}
+      npm_config_python: ${{ steps.setup-python.outputs.python-path }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+          ref: ${{ needs.prepare.outputs.tag }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -43,17 +90,26 @@ jobs:
             frontend/package-lock.json
             node-backend/package-lock.json
 
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Show Python version
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "PYTHON=${PYTHON}"
+          python --version
+          "$PYTHON" --version
+
       - name: Validate tag and sync package files
         shell: bash
         run: |
           set -euo pipefail
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            TAG="${{ inputs.tag }}"
-          else
-            TAG="${GITHUB_REF_NAME}"
-          fi
-
+          TAG="${{ needs.prepare.outputs.tag }}"
           TAG="$(echo "$TAG" | xargs)"
           test -n "$TAG"
           VERSION="$(node node-backend/scripts/version.js read)"
@@ -85,6 +141,6 @@ jobs:
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          tag_name: ${{ needs.prepare.outputs.tag }}
           files: ${{ matrix.artifact_glob }}
           fail_on_unmatched_files: true
