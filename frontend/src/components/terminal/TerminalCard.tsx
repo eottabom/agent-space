@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Minus, X, Pencil } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
@@ -7,8 +7,7 @@ import { AGENT_COLORS } from '@/lib/constants'
 import { useSessionStore } from '@/store/sessionStore'
 import type { Session } from '@/types/session'
 import type { WsMessage } from '@/types/websocket'
-
-const IDLE_THRESHOLD_MS = 5000
+import { ACTIVITY_REFRESH_MS, isSessionWorking } from '@/lib/session-activity'
 
 interface TerminalCardProps {
   session: Session
@@ -23,35 +22,18 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
   const { dispatch } = useSessionStore()
   const agentColor = AGENT_COLORS[session.agentId] || '#888'
   const isAlive = session.alive && session.state === 'RUNNING'
+  const [now, setNow] = useState(() => Date.now())
 
-  const lastOutputRef = useRef(0)
-  const [isWorking, setIsWorking] = useState(false)
-
-  const handleOutput = useCallback(() => {
-    const now = Date.now()
-    lastOutputRef.current = now
-    setIsWorking(true)
-
-    // store 업데이트는 3초마다 throttle
-    if (!session.lastOutputAt || now - session.lastOutputAt > 3000) {
-      dispatch({ type: 'UPDATE_SESSION', id: session.id, updates: { lastOutputAt: now } })
-    }
-  }, [dispatch, session.id, session.lastOutputAt])
-
-  const { terminalRef } = useTerminal({ sessionId: session.id, connected, send, addHandler, onOutput: handleOutput })
-
-  // idle 전환 타이머
   useEffect(() => {
     if (!isAlive) {
       return
     }
-    const interval = setInterval(() => {
-      if (Date.now() - lastOutputRef.current > IDLE_THRESHOLD_MS) {
-        setIsWorking(false)
-      }
-    }, 2000)
+
+    const interval = setInterval(() => setNow(Date.now()), ACTIVITY_REFRESH_MS)
     return () => clearInterval(interval)
   }, [isAlive])
+
+  const { terminalRef } = useTerminal({ sessionId: session.id, connected, send, addHandler })
 
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
@@ -77,6 +59,7 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
     setEditing(false)
   }
 
+  const isWorking = isSessionWorking(session, now)
   const statusLabel = !isAlive ? 'stopped' : isWorking ? 'working' : 'idle'
   const statusClass = !isAlive
     ? 'bg-gray-800 text-gray-500'

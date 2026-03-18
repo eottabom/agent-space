@@ -23,7 +23,7 @@ const RANDOM_LABELS: Record<string, string[]> = {
   THINKING: ['분석 중...', '생각 중...', '음...', '고민 중...', '공부 중...'],
 }
 
-const CHARACTER_STYLES = ['claude', 'codex', 'gemini', 'bash', 'cat', 'dog', 'neko'] as const
+const CHARACTER_STYLES = ['claude', 'codex', 'gemini', 'bash', 'cat', 'neko'] as const
 
 function getCharacterStyle(sessionId: string): string {
   let hash = 0
@@ -37,7 +37,7 @@ export function DotCharacter({ avatar, alias, sessionId, agentId }: DotCharacter
   const color = AGENT_COLORS[agentId] || '#888'
   const isActive = avatar.state === 'WORKING' || avatar.state === 'THINKING' || avatar.state === 'MOVING'
   const characterStyle = useMemo(() => getCharacterStyle(sessionId), [sessionId])
-  const isAnimal = characterStyle === 'cat' || characterStyle === 'dog' || characterStyle === 'neko'
+  const isAnimal = characterStyle === 'cat' || characterStyle === 'neko'
 
   const [displayAction, setDisplayAction] = useState<ActionName>((avatar.action as ActionName) || 'RESTING')
   const [displayLabel, setDisplayLabel] = useState('')
@@ -85,9 +85,7 @@ export function DotCharacter({ avatar, alias, sessionId, agentId }: DotCharacter
     ? ''
     : characterStyle === 'cat' || characterStyle === 'neko'
       ? '야옹야옹!'
-      : characterStyle === 'dog'
-        ? '멍멍!'
-        : displayLabel
+      : displayLabel
 
   return (
     <div className="relative flex flex-col items-center gap-0.5">
@@ -322,76 +320,45 @@ const CAT_WALK: string[] = [
   '..OOO...OOO..',
 ]
 
-const DOG_BASE: string[] = [
-  '..OHO...OHO..',
-  '.OHHO...OHHO.',
-  '.OHHHHHHHHHO.',
-  'OHHHHHHHHHHHHO',
-  'OHEEeHHHeEEHO',
-  'OHEEEHHHEEEHO',
-  'OHHHHHmHHHHHO',
-  'OHBHHHHHHHBHO',
-  '.ODDDDDDDDDO.',
-  '.OHHHHHHHHHOHO',
-  '.OHHHHHHHHHO..',
-  '..OHH...HHO..',
-  '..OOO...OOO..',
-]
-
-const DOG_WALK: string[] = [
-  '..OHO...OHO..',
-  '.OHHO...OHHO.',
-  '.OHHHHHHHHHO.',
-  'OHHHHHHHHHHHHO',
-  'OHEEeHHHeEEHO',
-  'OHEEEHHHEEEHO',
-  'OHHHHHmHHHHHO',
-  'OHBHHHHHHHBHO',
-  '.ODDDDDDDDDO.',
-  '.OHHHHHHHHHO.',
-  '.OHHHHHHHHHO.',
-  '..OHH..HHO...',
-  '..OOO..OOO...',
-]
-
 const NEKO_BASE: string[] = [
-  '...OH...HO...',
-  '..OKHO.OHKO..',
-  '.OHHHHHHHHHO.',
-  'OHHHHHHHHHHHHO',
-  'OHhEhHHHhEhHO',
-  'OHHHHHmHHHHHO',
-  'OHHBHmHmHBHHO',
-  'OHHHFFFFFFHHHO',
-  'OHHFFFFFFFFHHO',
-  'OHHHFFFFFFHHHO',
-  '.OHHHHHHHHHOHO',
-  '.OHHHO.OHHHO.',
-  '..OOO...OOO..',
+  '....OH...HO....',
+  '...OHHO.OHHO...',
+  '...OHKHHHKHO...',
+  '..OHHHHHHHHHO..',
+  '.OHHhHHHHHhHHO.',
+  '.OHEEEHHHEEEHO.',
+  'OHHHEEHHHEEHHHO',
+  'OHHHHHmmmHHHHHO',
+  'OHHBHHFFFHHBHHO',
+  '.OHHFFFFFFFHHO.',
+  '.OHHFFFFFFFHHO.',
+  '..OHHFFFFFHHO..',
+  '..OHHFFFFFHHO..',
+  '...OHHF.FHHO...',
+  '....OO...OO....',
 ]
 
 const NEKO_WALK: string[] = [
-  '...OH...HO...',
-  '..OKHO.OHKO..',
-  '.OHHHHHHHHHO.',
-  'OHHHHHHHHHHHHO',
-  'OHhEhHHHhEhHO',
-  'OHHHHHmHHHHHO',
-  'OHHBHmHmHBHHO',
-  'OHHHFFFFFFHHHO',
-  'OHHFFFFFFFFHHO',
-  'OHHHFFFFFFHHHO',
-  '.OHHHHHHHHHOHO',
-  'OHHHO...OHHHO',
-  '.OOO.....OOO.',
+  '....OH...HO....',
+  '...OHHO.OHHO...',
+  '...OHKHHHKHO...',
+  '..OHHHHHHHHHO..',
+  '.OHHhHHHHHhHHO.',
+  '.OHEEEHHHEEEHO.',
+  'OHHHEEHHHEEHHHO',
+  'OHHHHHmmmHHHHHO',
+  'OHHBHHFFFHHBHHO',
+  '.OHHFFFFFFFHHO.',
+  '.OHHFFFFFFFHHO.',
+  '..OHHFFFFFHHO..',
+  '.OHHFF...FFHHO.',
+  '.OHO.......OHO.',
+  '..OO.......OO..',
 ]
 
 function buildGrid(characterStyle: string, action: ActionName): string[] {
   if (characterStyle === 'cat') {
     return action === 'WALKING' ? CAT_WALK : CAT_BASE
-  }
-  if (characterStyle === 'dog') {
-    return action === 'WALKING' ? DOG_WALK : DOG_BASE
   }
   if (characterStyle === 'neko') {
     return action === 'WALKING' ? NEKO_WALK : NEKO_BASE

@@ -18,6 +18,11 @@ export function useTerminal({ sessionId, connected, send, addHandler, onOutput }
   const xtermRef = useRef<Terminal | null>(null)
   const fitAddonRef = useRef<FitAddon | null>(null)
   const connectedRef = useRef(connected)
+  const onOutputRef = useRef(onOutput)
+
+  useEffect(() => {
+    onOutputRef.current = onOutput
+  }, [onOutput])
 
   useEffect(() => {
     connectedRef.current = connected
@@ -92,7 +97,10 @@ export function useTerminal({ sessionId, connected, send, addHandler, onOutput }
     xtermRef.current = term
     fitAddonRef.current = fitAddon
 
-    requestAnimationFrame(() => fit())
+    requestAnimationFrame(() => {
+      fit()
+      term.focus()
+    })
 
     // User input -> backend
     const termResponseRe = /^\x1b\[[\?>]?[\d;]*[cnR]$/
@@ -132,7 +140,7 @@ export function useTerminal({ sessionId, connected, send, addHandler, onOutput }
           term.write(bytes)
           // 커서 이동, 상태바 등 소량 출력은 무시
           if (message.type === MessageTypes.SESSION_OUTPUT && bytes.length > 512) {
-            onOutput?.()
+            onOutputRef.current?.()
           }
         }
       }
@@ -155,7 +163,7 @@ export function useTerminal({ sessionId, connected, send, addHandler, onOutput }
       xtermRef.current = null
       fitAddonRef.current = null
     }
-  }, [sessionId, send, addHandler, fit, sendReconnect, onOutput])
+  }, [sessionId, send, addHandler, fit, sendReconnect])
 
   // Re-send reconnect when WebSocket (re)connects
   useEffect(() => {

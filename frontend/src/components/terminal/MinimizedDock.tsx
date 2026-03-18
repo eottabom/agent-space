@@ -1,8 +1,8 @@
 import { Maximize2, X } from 'lucide-react'
 import { AGENT_COLORS } from '@/lib/constants'
 import type { Session } from '@/types/session'
-
-const IDLE_THRESHOLD_MS = 5000
+import { ACTIVITY_REFRESH_MS, isSessionWorking } from '@/lib/session-activity'
+import { useEffect, useState } from 'react'
 
 interface MinimizedDockProps {
   sessions: Session[]
@@ -15,13 +15,20 @@ function getActivityStatus(session: Session): { label: string; color: string } {
   if (!isAlive) {
     return { label: 'stopped', color: '#6b7280' }
   }
-  const isWorking = session.lastOutputAt && (Date.now() - session.lastOutputAt < IDLE_THRESHOLD_MS)
+  const isWorking = isSessionWorking(session)
   return isWorking
     ? { label: 'working', color: '#4ade80' }
     : { label: 'idle', color: '#fb923c' }
 }
 
 export function MinimizedDock({ sessions, onRestore, onKill }: MinimizedDockProps) {
+  const [, setNow] = useState(() => Date.now())
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), ACTIVITY_REFRESH_MS)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <div className="flex items-center gap-2 px-4 py-2 border-t border-[#1e2a3a] bg-[#0a1018]">
       {sessions.map(session => {

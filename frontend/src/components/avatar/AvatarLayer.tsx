@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DotCharacter } from './DotCharacter'
 import { useSessionStore } from '@/store/sessionStore'
 import type { AvatarState } from '@/types/session'
@@ -12,18 +12,30 @@ const DEFAULT_AVATAR: Omit<AvatarState, 'sessionId'> = {
 
 const CHAR_W = 64
 const IDLE_RATIO = 0.3 // idle zone = 왼쪽 30%
-const WALK_DURATION = 5 // seconds
+const WALK_DURATION = 8 // seconds
 
 export function AvatarLayer() {
   const { store } = useSessionStore()
-  const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState(0)
-  const knownRef = useRef<Set<string>>(new Set())
   const [travelingIds, setTravelingIds] = useState<Set<string>>(new Set())
   const prevZones = useRef<Map<string, string>>(new Map())
+  const roRef = useRef<ResizeObserver | null>(null)
+
+  // callback ref — div가 실제로 DOM에 붙을 때마다 width를 측정
+  const containerRef = useCallback((el: HTMLDivElement | null) => {
+    if (roRef.current) {
+      roRef.current.disconnect()
+      roRef.current = null
+    }
+    if (!el) return
+    setContainerWidth(el.clientWidth)
+    const ro = new ResizeObserver(([e]) => setContainerWidth(e.contentRect.width))
+    ro.observe(el)
+    roRef.current = ro
+  }, [])
 
   const aliveSessions = useMemo(
-    () => Array.from(store.sessions.values()).filter((s) => s.alive && s.state === 'RUNNING'),
+    () => Array.from(store.sessions.values()).filter((s) => s.alive),
     [store.sessions],
   )
 
@@ -36,21 +48,13 @@ export function AvatarLayer() {
     [aliveSessions, store.avatars],
   )
 
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    setContainerWidth(el.clientWidth)
-    const ro = new ResizeObserver(([e]) => setContainerWidth(e.contentRect.width))
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-
   // Target positions — idle 왼쪽 작게, working 오른쪽 넓게
   const targets = useMemo(() => {
     if (containerWidth === 0) return new Map<string, number>()
 
     const idleBound = Math.round(containerWidth * IDLE_RATIO)
-    const workStart = idleBound + 40
+    const workZoneStart = idleBound + 40
+    const workZoneEnd = containerWidth - 16
 
     const idleIds: string[] = []
     const workIds: string[] = []
@@ -59,9 +63,14 @@ export function AvatarLayer() {
       else idleIds.push(session.id)
     }
 
+    // Center working avatars within the working zone
+    const totalWorkW = workIds.length * CHAR_W
+    const workZoneCenter = (workZoneStart + workZoneEnd) / 2
+    const workGroupStart = Math.max(workZoneStart, Math.round(workZoneCenter - totalWorkW / 2))
+
     const m = new Map<string, number>()
     idleIds.forEach((id, i) => m.set(id, 16 + i * CHAR_W))
-    workIds.forEach((id, i) => m.set(id, workStart + i * CHAR_W))
+    workIds.forEach((id, i) => m.set(id, workGroupStart + i * CHAR_W))
     return m
   }, [containerWidth, sessionAvatars])
 
@@ -116,8 +125,6 @@ export function AvatarLayer() {
 
       {sessionAvatars.map(({ session, avatar }) => {
         const x = targets.get(session.id) ?? 16
-        const isNew = !knownRef.current.has(session.id)
-        if (isNew) knownRef.current.add(session.id)
         const isTraveling = travelingIds.has(session.id)
 
         return (
@@ -125,8 +132,9 @@ export function AvatarLayer() {
             key={session.id}
             className="absolute bottom-2"
             style={{
-              left: x,
-              transition: isNew ? 'none' : `left ${WALK_DURATION}s steps(30, end)`,
+              left: 0,
+              transform: `translateX(${x}px)`,
+              transition: `transform ${WALK_DURATION}s steps(30, end)`,
             }}
           >
             <DotCharacter

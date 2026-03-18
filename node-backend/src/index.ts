@@ -212,8 +212,8 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
     broadcast({
         type: 'avatar:update',
         sessionId,
-        state: 'active',
-        action: 'thinking',
+        state: 'THINKING',
+        action: 'THINKING',
         message: `${agentId} 시작됨`,
         zone: 'WORKING_ZONE',
     })
@@ -237,8 +237,8 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
         broadcast({
             type: 'avatar:update',
             sessionId,
-            state: 'idle',
-            action: 'idle',
+            state: 'IDLE',
+            action: 'RESTING',
             message: `${agentId} 종료됨`,
             zone: 'IDLE_ZONE',
         })
