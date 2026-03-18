@@ -35,7 +35,7 @@ npm-debug.log*
 .codex/
 AGENTS.md
 CLAUDE.md
-docs/ai/
+docs
 
 # 내부 개발 문서
 docs/development.md

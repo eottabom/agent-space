@@ -37,10 +37,14 @@ cd node-backend
 npm run electron:dev
 ```
 
+릴리스 절차는 `docs/release.md` 에 정리한다.
+
 ## 프로젝트 구조
 
 ```
 agent-space/
+├── .github/
+│   └── workflows/
 ├── node-backend/           Node.js 백엔드 + Electron
 │   ├── scripts/
 │   └── src/
@@ -50,7 +54,9 @@ agent-space/
 │       ├── agentResolver.ts  에이전트 → CLI 커맨드 변환
 │       └── sessionRegistry.ts  인메모리 세션 관리
 ├── backend/                Java/Spring Boot 백엔드 (레거시)
-└── frontend/               React 프론트엔드
+├── frontend/               React 프론트엔드
+├── docs/
+└── version.properties      릴리스 버전 source of truth
 ```
 
 ## 라이선스

@@ -1,0 +1,90 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v0.9.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_glob: "node-backend/electron-dist/*.AppImage"
+          - os: macos-latest
+            artifact_glob: "node-backend/electron-dist/*.dmg"
+          - os: windows-latest
+            artifact_glob: "node-backend/electron-dist/*.exe"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: |
+            frontend/package-lock.json
+            node-backend/package-lock.json
+
+      - name: Validate tag and sync package files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+
+          TAG="$(echo "$TAG" | xargs)"
+          test -n "$TAG"
+          VERSION="$(node node-backend/scripts/version.js read)"
+          test "$TAG" = "v$VERSION" || {
+            echo "Tag $TAG does not match version.properties ($VERSION)"
+            exit 1
+          }
+
+          node node-backend/scripts/version.js sync
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Install backend dependencies
+        working-directory: node-backend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Build Electron package
+        working-directory: node-backend
+        run: |
+          npm run build
+          npx electron-builder --publish never
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          files: ${{ matrix.artifact_glob }}
+          fail_on_unmatched_files: true
