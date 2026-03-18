@@ -17,6 +17,9 @@ backend/agentspace.db
 frontend/node_modules/
 frontend/dist/
 frontend/dist-ssr/
+node-backend/node_modules/
+node-backend/dist/
+node-backend/electron-dist/
 
 # Logs
 *.log
