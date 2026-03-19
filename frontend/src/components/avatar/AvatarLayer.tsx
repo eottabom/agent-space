@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChevronUp, ChevronDown } from 'lucide-react'
 import { DotCharacter } from './DotCharacter'
 import { useSessionStore } from '@/store/sessionStore'
 import type { AvatarState } from '@/types/session'
+
+const AVATAR_VISIBLE_KEY = 'agentspace:avatar-visible'
 
 const DEFAULT_AVATAR: Omit<AvatarState, 'sessionId'> = {
   state: 'IDLE',
@@ -16,6 +19,7 @@ const WALK_DURATION = 8 // seconds
 
 export function AvatarLayer() {
   const { store } = useSessionStore()
+  const [visible, setVisible] = useState(() => localStorage.getItem(AVATAR_VISIBLE_KEY) !== 'false')
   const [containerWidth, setContainerWidth] = useState(0)
   const [travelingIds, setTravelingIds] = useState<Set<string>>(new Set())
   const prevZones = useRef<Map<string, string>>(new Map())
@@ -108,58 +112,81 @@ export function AvatarLayer() {
 
   if (aliveSessions.length === 0) return null
 
+  const toggleVisible = () => {
+    setVisible(prev => {
+      const next = !prev
+      localStorage.setItem(AVATAR_VISIBLE_KEY, String(next))
+      return next
+    })
+  }
+
   const idleBound = Math.round(containerWidth * IDLE_RATIO)
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full border-b border-[#1a2535] bg-[#0a1220]/80 overflow-hidden"
-      style={{ minHeight: 120 }}
-      data-testid="avatar-layer"
-    >
-      <div className="absolute top-2 left-4">
-        <span className="text-[7px] uppercase tracking-widest text-gray-600 font-mono">idle</span>
-      </div>
-      <div className="absolute top-2" style={{ left: idleBound + 48 }}>
-        <span className="text-[7px] uppercase tracking-widest text-gray-600 font-mono">working</span>
-      </div>
+    <div className="relative w-full border-b border-[#1a2535] bg-[#0a1220]/80">
+      {/* Toggle button */}
+      <button
+        onClick={toggleVisible}
+        className="absolute top-1 right-2 z-10 text-gray-600 hover:text-gray-400 transition-colors cursor-pointer"
+        title={visible ? 'Hide avatars' : 'Show avatars'}
+      >
+        {visible
+          ? <ChevronUp className="w-3.5 h-3.5" />
+          : <ChevronDown className="w-3.5 h-3.5" />}
+      </button>
 
-      {/* Zone divider */}
-      <div
-        className="absolute top-0 bottom-0 border-l border-dashed border-[#1a2535] opacity-40"
-        style={{ left: idleBound + 20 }}
-      />
-
-      {sessionAvatars.map(({ session, avatar }) => {
-        const x = targets.get(session.id) ?? 16
-        const isTraveling = travelingIds.has(session.id)
-
-        return (
-          <div
-            key={session.id}
-            className="absolute bottom-2"
-            data-testid={`avatar-${session.id}`}
-            data-zone={avatar.zone}
-            data-state={isTraveling ? 'MOVING' : avatar.state}
-            style={{
-              left: 0,
-              transform: `translateX(${x}px)`,
-              transition: `transform ${WALK_DURATION}s steps(30, end)`,
-            }}
-          >
-            <DotCharacter
-              avatar={
-                isTraveling
-                  ? { ...avatar, state: 'MOVING', action: 'WALKING' }
-                  : avatar
-              }
-              alias={session.alias}
-              sessionId={session.id}
-              agentId={session.agentId}
-            />
+      {visible && (
+        <div
+          ref={containerRef}
+          className="relative w-full overflow-hidden"
+          style={{ minHeight: 120 }}
+          data-testid="avatar-layer"
+        >
+          <div className="absolute top-2 left-4">
+            <span className="text-[7px] uppercase tracking-widest text-gray-600 font-mono">idle</span>
           </div>
-        )
-      })}
+          <div className="absolute top-2" style={{ left: idleBound + 48 }}>
+            <span className="text-[7px] uppercase tracking-widest text-gray-600 font-mono">working</span>
+          </div>
+
+          {/* Zone divider */}
+          <div
+            className="absolute top-0 bottom-0 border-l border-dashed border-[#1a2535] opacity-40"
+            style={{ left: idleBound + 20 }}
+          />
+
+          {sessionAvatars.map(({ session, avatar }) => {
+            const x = targets.get(session.id) ?? 16
+            const isTraveling = travelingIds.has(session.id)
+
+            return (
+              <div
+                key={session.id}
+                className="absolute bottom-2"
+                data-testid={`avatar-${session.id}`}
+                data-zone={avatar.zone}
+                data-state={isTraveling ? 'MOVING' : avatar.state}
+                style={{
+                  left: 0,
+                  transform: `translateX(${x}px)`,
+                  transition: `transform ${WALK_DURATION}s steps(30, end)`,
+                }}
+              >
+                <DotCharacter
+                  avatar={
+                    isTraveling
+                      ? { ...avatar, state: 'MOVING', action: 'WALKING' }
+                      : avatar
+                  }
+                  alias={session.alias}
+                  sessionId={session.id}
+                  agentId={session.agentId}
+                />
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

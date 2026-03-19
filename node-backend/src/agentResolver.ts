@@ -2,12 +2,26 @@
  * 에이전트 ID → CLI 커맨드 변환.
  * Java AgentType enum 과 동일한 매핑을 유지한다.
  */
+import { existsSync } from 'fs'
+import { BASHRC_PATH } from './bashTheme'
 
 interface AgentDef {
     command: string
     defaultArgs: string[]
     autoApproveFlag: string
     debugFlag: string
+}
+
+/**
+ * Bash 에이전트의 기본 인자를 결정한다.
+ * 커스텀 bashrc 가 존재하면 --rcfile 로 로드하고,
+ * 없으면 기존 -l (로그인 쉘) 폴백.
+ */
+function bashDefaultArgs(): string[] {
+    if (existsSync(BASHRC_PATH)) {
+        return ['--rcfile', BASHRC_PATH]
+    }
+    return ['-l']
 }
 
 const AGENT_MAP: Record<string, AgentDef> = {
@@ -31,7 +45,7 @@ const AGENT_MAP: Record<string, AgentDef> = {
     },
     bash: {
         command: '/bin/bash',
-        defaultArgs: ['-l'],
+        defaultArgs: bashDefaultArgs(),
         autoApproveFlag: '',
         debugFlag: '-x',
     },

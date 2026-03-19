@@ -1,8 +1,20 @@
 import { useState, useCallback, useMemo } from 'react'
+import { Rows3, Columns2 } from 'lucide-react'
 import { TerminalCard } from './TerminalCard'
 import { MinimizedDock } from './MinimizedDock'
 import { useSessionStore } from '@/store/sessionStore'
 import type { WsMessage } from '@/types/websocket'
+
+const LAYOUT_KEY = 'agentspace:layout'
+type Layout = 'rows' | 'split'
+
+function loadLayout(): Layout {
+  return (localStorage.getItem(LAYOUT_KEY) as Layout) || 'rows'
+}
+
+function saveLayout(layout: Layout) {
+  localStorage.setItem(LAYOUT_KEY, layout)
+}
 
 interface TerminalGridProps {
   connected: boolean
@@ -37,7 +49,16 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
     })
   }, [])
 
+  const [layout, setLayout] = useState<Layout>(loadLayout)
   const [showKillConfirm, setShowKillConfirm] = useState(false)
+
+  const toggleLayout = useCallback(() => {
+    setLayout(prev => {
+      const next = prev === 'rows' ? 'split' : 'rows'
+      saveLayout(next)
+      return next
+    })
+  }, [])
 
   const handleKillAll = useCallback(() => {
     sessions.forEach(s => onKill(s.id))
@@ -54,9 +75,18 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      {/* 터미널 헤더 — 전체 닫기 버튼 */}
+      {/* 터미널 헤더 — 레이아웃 토글 + 전체 닫기 */}
       {sessions.length > 1 && (
-        <div className="flex justify-end px-4 pt-2">
+        <div className="flex items-center justify-end gap-2 px-4 pt-2">
+          <button
+            onClick={toggleLayout}
+            className="text-gray-500 hover:text-gray-300 transition-colors p-1 rounded border border-[#1a2535] hover:border-gray-500"
+            title={layout === 'rows' ? 'Split view' : 'Stack view'}
+          >
+            {layout === 'rows'
+              ? <Columns2 className="w-3.5 h-3.5" />
+              : <Rows3 className="w-3.5 h-3.5" />}
+          </button>
           <button
             onClick={() => setShowKillConfirm(true)}
             className="text-[10px] text-gray-500 hover:text-red-400 transition-colors px-2 py-0.5 rounded border border-[#1a2535] hover:border-red-400/30"
@@ -99,7 +129,7 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
           </div>
         ) : (
           <div className={
-            activeSessions.length === 1
+            activeSessions.length === 1 || layout === 'rows'
               ? "grid grid-cols-1 gap-4"
               : "grid grid-cols-1 lg:grid-cols-2 gap-4"
           }>

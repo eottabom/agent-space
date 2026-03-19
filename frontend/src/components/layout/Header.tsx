@@ -2,6 +2,7 @@ import { Terminal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { AGENTS } from '@/lib/constants'
+import { AGENT_ICONS } from '@/components/icons/AgentIcons'
 
 interface HeaderProps {
   connected: boolean
@@ -38,7 +39,7 @@ export function Header({ connected, cwd, onCwdChange, onAgentClick }: HeaderProp
           <Button
             key={agent.id}
             size="sm"
-            className="h-8 text-xs font-medium px-3"
+            className="h-8 text-xs font-medium px-3 gap-1.5"
             data-testid={`launch-agent-${agent.id}`}
             style={{
               backgroundColor: agent.color + '20',
@@ -48,7 +49,7 @@ export function Header({ connected, cwd, onCwdChange, onAgentClick }: HeaderProp
             }}
             onClick={() => onAgentClick(agent.id)}
           >
-            + {agent.label}
+            {AGENT_ICONS[agent.id]?.({ size: 14 })} {agent.label}
           </Button>
         ))}
       </div>

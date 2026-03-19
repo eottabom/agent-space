@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { useTerminal } from '@/hooks/useTerminal'
 import { AGENT_COLORS } from '@/lib/constants'
+import { AGENT_ICONS } from '@/components/icons/AgentIcons'
 import { useSessionStore } from '@/store/sessionStore'
 import type { Session } from '@/types/session'
 import type { WsMessage } from '@/types/websocket'
@@ -82,10 +83,17 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
         >
           <Minus className="w-2.5 h-2.5" />
         </button>
-        <div
-          className="w-2 h-2 rounded-full flex-shrink-0"
-          style={{ backgroundColor: isAlive ? agentColor : '#555' }}
-        />
+        <span
+          className="flex-shrink-0"
+          style={{ color: isAlive ? agentColor : '#555' }}
+        >
+          {AGENT_ICONS[session.agentId]?.({ size: 14 }) || (
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: isAlive ? agentColor : '#555' }}
+            />
+          )}
+        </span>
 
         {/* Editable alias */}
         {editing ? (

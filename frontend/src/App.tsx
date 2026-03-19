@@ -32,7 +32,6 @@ function toSession(value: unknown): Session | null {
   }
 }
 
-const AVATAR_WALK_DURATION_MS = 8500
 
 export default function App() {
   const [store, dispatch] = useReducer(sessionReducer, initialSessionStore)
@@ -94,16 +93,7 @@ export default function App() {
         }
         case MessageTypes.SESSION_ENDED: {
           const sid = message.sessionId as string
-          dispatch({ type: 'UPDATE_SESSION', id: sid, updates: { state: 'STOPPED' } })
-          dispatch({
-            type: 'UPDATE_AVATAR',
-            avatar: { sessionId: sid, state: 'IDLE', action: 'RESTING', message: '', zone: 'IDLE_ZONE' },
-          })
-          const timer = setTimeout(() => {
-            dispatch({ type: 'REMOVE_SESSION', id: sid })
-            removeTimers.current.delete(sid)
-          }, AVATAR_WALK_DURATION_MS)
-          removeTimers.current.set(sid, timer)
+          dispatch({ type: 'REMOVE_SESSION', id: sid })
           break
         }
         case MessageTypes.SESSION_LIST_RESULT: {

@@ -37,6 +37,12 @@ cd node-backend
 npm run electron:dev
 ```
 
+GitHub Releases 에서 받은 macOS 앱이 Apple 인증서명 경고로 실행되지 않으면 quarantine 속성을 제거한 뒤 실행한다.
+
+```bash
+xattr -dr com.apple.quarantine /Applications/AgentSpace.app
+```
+
 릴리스 절차는 `docs/release.md` 에 정리한다.
 
 ## 프로젝트 구조
