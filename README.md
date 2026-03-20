@@ -2,6 +2,8 @@
 
 로컬 CLI 에이전트(Claude Code, Codex CLI, Gemini CLI, Bash)를 PTY로 실행하고, 브라우저에서 세션을 관리하는 애플리케이션.
 
+개인이 독립적으로 개발한 프로젝트이며, Anthropic, OpenAI, Google과 공식적인 제휴, 승인 또는 후원 관계가 없습니다. 
+
 ## 주요 기능
 
 - PTY 기반 에이전트 세션 관리 (생성, 종료, 재연결)
