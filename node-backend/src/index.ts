@@ -182,12 +182,13 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
     const {
         agentId,
         workspace = 'default',
-        cwd = process.cwd(),
+        cwd: rawCwd,
         alias,
         autoApprove = false,
         debug = false,
         args = [],
     } = msg
+    const cwd = rawCwd || process.cwd()
 
     const sessionId = uuidv4()
     const shortId = sessionId.substring(0, 4)

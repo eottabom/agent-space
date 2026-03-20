@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronUp, ChevronDown } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { DotCharacter } from './DotCharacter'
 import { useSessionStore } from '@/store/sessionStore'
 import type { AvatarState } from '@/types/session'
@@ -123,22 +124,26 @@ export function AvatarLayer() {
   const idleBound = Math.round(containerWidth * IDLE_RATIO)
 
   return (
-    <div className="relative w-full border-b border-[#1a2535] bg-[#0a1220]/80">
-      {/* Toggle button */}
+    <div className="relative w-full border-b border-[#1a2535] bg-[#0a1220]/80 flex">
+      {/* Toggle button — left edge */}
       <button
         onClick={toggleVisible}
-        className="absolute top-1 right-2 z-10 text-gray-600 hover:text-gray-400 transition-colors cursor-pointer"
+        className={cn(
+          "flex-shrink-0 flex items-center justify-center border-r border-[#1a2535] text-gray-600 hover:text-gray-300 hover:bg-[#1a2535]/60 transition-colors cursor-pointer",
+          visible ? "w-6" : "w-7"
+        )}
+        style={visible ? undefined : { minHeight: 28 }}
         title={visible ? 'Hide avatars' : 'Show avatars'}
       >
         {visible
-          ? <ChevronUp className="w-3.5 h-3.5" />
-          : <ChevronDown className="w-3.5 h-3.5" />}
+          ? <ChevronLeft className="w-3.5 h-3.5" />
+          : <ChevronRight className="w-3.5 h-3.5" />}
       </button>
 
       {visible && (
         <div
           ref={containerRef}
-          className="relative w-full overflow-hidden"
+          className="relative flex-1 overflow-hidden"
           style={{ minHeight: 120 }}
           data-testid="avatar-layer"
         >

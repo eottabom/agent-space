@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import { Rows3, Columns2 } from 'lucide-react'
 import { TerminalCard } from './TerminalCard'
 import { MinimizedDock } from './MinimizedDock'
@@ -65,6 +65,27 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
     setShowKillConfirm(false)
   }, [sessions, onKill])
 
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  // Ctrl+1~9 to focus terminal by index
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return
+      const num = parseInt(e.key, 10)
+      if (num < 1 || num > 9 || isNaN(num)) return
+
+      e.preventDefault()
+      const cards = gridRef.current?.querySelectorAll<HTMLElement>('[data-testid^="terminal-card-"]')
+      const card = cards?.[num - 1]
+      if (!card) return
+      // xterm creates a textarea for input
+      const textarea = card.querySelector<HTMLTextAreaElement>('.xterm-helper-textarea')
+      textarea?.focus()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   if (sessions.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-600">
@@ -74,7 +95,7 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div ref={gridRef} className="flex-1 flex flex-col overflow-hidden">
       {/* 터미널 헤더 — 레이아웃 토글 + 전체 닫기 */}
       {sessions.length > 1 && (
         <div className="flex items-center justify-end gap-2 px-4 pt-2">

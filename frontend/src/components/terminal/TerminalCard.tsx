@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Minus, X, Pencil } from 'lucide-react'
+import { Minus, X, Pencil, Folder } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { useTerminal } from '@/hooks/useTerminal'
@@ -125,6 +125,13 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
           {session.id.substring(0, 8)}
         </span>
 
+        {session.cwd && (
+          <span className="text-[10px] text-gray-500 font-mono flex items-center gap-1 flex-shrink-0">
+            <Folder className="w-2.5 h-2.5 flex-shrink-0" />
+            {shortenPath(session.cwd)}
+          </span>
+        )}
+
         <div className="ml-auto flex items-center gap-2">
           <Badge className={cn("text-[10px] px-2 py-0 font-medium border-0", statusClass)}>
             <span data-testid={`terminal-status-${session.id}`}>{statusLabel}</span>
@@ -145,6 +152,16 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
       </div>
     </div>
   )
+}
+
+function shortenPath(p: string): string {
+  const home = '/Users/'
+  if (p.startsWith(home)) {
+    const rest = p.slice(home.length)
+    const slash = rest.indexOf('/')
+    return slash === -1 ? '~' : '~' + rest.slice(slash)
+  }
+  return p
 }
 
 function getAgentLabel(id: string): string {
