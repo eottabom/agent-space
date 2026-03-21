@@ -32,4 +32,4 @@ npm run electron:dev
 
 ## 데모
 
-<video src="../videos/agent-space-demo.mp4" controls width="100%"></video>
+<video src="https://github.com/eottabom/agent-space/raw/main/videos/agent-space-demo.mp4" controls width="100%"></video>
