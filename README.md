@@ -4,7 +4,7 @@
 
 개인이 독립적으로 개발한 프로젝트이며, Anthropic, OpenAI, Google과 공식적인 제휴, 승인 또는 후원 관계가 없습니다. 
 
-<video src="https://github.com/user-attachments/assets/5e75c5c6-784f-4ec7-9f8a-a541ce67fa74" autoplay muted loop controls width="100%"></video>
+![demo](./videos/agent-space-demo.gif)
 
 ## 주요 기능
 
