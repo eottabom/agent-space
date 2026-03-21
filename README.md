@@ -4,6 +4,8 @@
 
 개인이 독립적으로 개발한 프로젝트이며, Anthropic, OpenAI, Google과 공식적인 제휴, 승인 또는 후원 관계가 없습니다. 
 
+- [데모 영상](./videos/agent-space-demo.mp4)
+
 ## 주요 기능
 
 - PTY 기반 에이전트 세션 관리 (생성, 종료, 재연결)
@@ -49,8 +51,6 @@ xattr -dr com.apple.quarantine /Applications/AgentSpace.app
 
 ```
 agent-space/
-├── .github/
-│   └── workflows/
 ├── node-backend/           Node.js 백엔드 + Electron
 │   ├── scripts/
 │   └── src/
@@ -61,7 +61,6 @@ agent-space/
 │       └── sessionRegistry.ts  인메모리 세션 관리
 ├── backend/                Java/Spring Boot 백엔드 (레거시)
 ├── frontend/               React 프론트엔드
-├── docs/
 └── version.properties      릴리스 버전 source of truth
 ```
 

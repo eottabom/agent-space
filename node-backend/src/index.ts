@@ -30,10 +30,15 @@ function resolveFrontendDist(): string {
     if (process.env.FRONTEND_DIST) {
         return process.env.FRONTEND_DIST
     }
-    // electron-builder 패키징 시 extraResources 로 복사된 경로
-    const electronProcess = process as NodeJS.Process & { resourcesPath?: string }
-    if (electronProcess.resourcesPath) {
-        return path.join(electronProcess.resourcesPath, 'frontend', 'dist')
+    // electron-builder 패키징 시에만 resourcesPath 사용
+    // 개발 모드(electron:dev)에서는 __dirname 기준 상대 경로 사용
+    try {
+        const { app } = require('electron')
+        if (app.isPackaged) {
+            return path.join(process.resourcesPath, 'frontend', 'dist')
+        }
+    } catch {
+        // electron 모듈 없음 — 단독 Node.js 실행
     }
     return path.resolve(__dirname, '../../frontend/dist')
 }

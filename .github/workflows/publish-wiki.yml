@@ -1,0 +1,48 @@
+name: 📚 Publish Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "wiki/**"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish wiki content
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git"
+          TEMP_DIR="$(mktemp -d)"
+
+          git clone "${REPO_URL}" "${TEMP_DIR}"
+
+          find "${TEMP_DIR}" -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+          cp -R wiki/. "${TEMP_DIR}/"
+
+          cd "${TEMP_DIR}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet --exit-code && [ -z "$(git status --short)" ]; then
+            echo "No wiki changes to publish."
+            exit 0
+          fi
+
+          git add .
+          git commit -m "docs: sync wiki"
+          git push origin HEAD:master
