@@ -1,6 +1,9 @@
 name: 🚀 Release
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
       tag:
@@ -29,7 +32,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          TAG="${{ inputs.tag }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${{ github.ref_name }}"
+          fi
           TAG="$(echo "$TAG" | xargs)"
           test -n "$TAG"
           git fetch --tags --force
