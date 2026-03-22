@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { FolderPicker } from '@/components/ui/folder-picker'
 import { Switch } from '@/components/ui/switch'
 import { AGENT_COLORS } from '@/lib/constants'
 
@@ -106,11 +107,11 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
             <>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-gray-400">Working Directory</label>
-                <Input
+                <FolderPicker
                   value={cwd}
-                  onChange={(e) => setCwd(e.target.value)}
+                  onChange={setCwd}
                   placeholder="/path/to/project"
-                  className="h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300"
+                  inputClassName="h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300"
                   data-testid="session-cwd-input"
                 />
               </div>

@@ -1,5 +1,7 @@
 import { createServer } from 'http'
 import { execSync } from 'child_process'
+import fs from 'fs/promises'
+import os from 'os'
 import path from 'path'
 import express from 'express'
 import { WebSocket, WebSocketServer } from 'ws'
@@ -94,6 +96,35 @@ const app = express()
 const httpServer = createServer(app)
 const wss = new WebSocketServer({ server: httpServer, path: '/ws' })
 const registry = new SessionRegistry()
+
+// 디렉토리 목록 API
+app.get('/api/directories', async (req, res) => {
+    const rawPath = typeof req.query.path === 'string' ? req.query.path.trim() : ''
+    const expanded = rawPath.startsWith('~')
+        ? path.join(os.homedir(), rawPath.slice(1))
+        : rawPath
+    const targetPath = expanded ? path.resolve(expanded) : os.homedir()
+
+    try {
+        const entries = await fs.readdir(targetPath, { withFileTypes: true })
+        const directories = entries
+            .filter(entry => entry.isDirectory() && !entry.name.startsWith('.'))
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(entry => ({
+                name: entry.name,
+                path: path.join(targetPath, entry.name),
+            }))
+
+        res.json({
+            current: targetPath,
+            parent: path.dirname(targetPath),
+            directories,
+        })
+    } catch (err) {
+        const message = err instanceof Error ? err.message : String(err)
+        res.status(400).json({ error: message })
+    }
+})
 
 // 정적 파일 서빙 — 빌드된 프론트엔드를 동일 포트에서 제공
 app.use(express.static(FRONTEND_DIST))

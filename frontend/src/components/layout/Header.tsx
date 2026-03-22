@@ -1,6 +1,6 @@
 import { Terminal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { FolderPicker } from '@/components/ui/folder-picker'
 import { AGENTS } from '@/lib/constants'
 import { AGENT_ICONS } from '@/components/icons/AgentIcons'
 
@@ -26,11 +26,12 @@ export function Header({ connected, cwd, onCwdChange, onAgentClick }: HeaderProp
         </span>
       </div>
 
-      <Input
+      <FolderPicker
         value={cwd}
-        onChange={(event) => onCwdChange(event.target.value)}
+        onChange={onCwdChange}
         placeholder="Working directory (optional)"
-        className="max-w-[280px] h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300 placeholder:text-gray-600"
+        className="max-w-[320px]"
+        inputClassName="h-8 text-xs bg-[#1a2535] border-[#2a3a4a] text-gray-300 placeholder:text-gray-600"
         data-testid="cwd-input"
       />
 
