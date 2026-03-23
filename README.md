@@ -92,6 +92,10 @@ agent-space/
 └── version.properties      릴리스 버전 source of truth
 ```
 
+## AI 활용
+
+이 프로젝트의 일부는 AI 도구의 도움을 받아 개발되었습니다.
+
 ## 라이선스
 
 MIT
