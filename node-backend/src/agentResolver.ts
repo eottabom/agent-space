@@ -4,12 +4,14 @@
  */
 import { existsSync } from 'fs'
 import { BASHRC_PATH } from './bashTheme'
+import { ZSH_ZDOTDIR } from './zshTheme'
 
 interface AgentDef {
     command: string
     defaultArgs: string[]
     autoApproveFlag: string
     debugFlag: string
+    extraEnv?: Record<string, string>
 }
 
 /**
@@ -49,11 +51,19 @@ const AGENT_MAP: Record<string, AgentDef> = {
         autoApproveFlag: '',
         debugFlag: '-x',
     },
+    zsh: {
+        command: '/bin/zsh',
+        defaultArgs: [],
+        autoApproveFlag: '',
+        debugFlag: '-x',
+        extraEnv: { ZDOTDIR: ZSH_ZDOTDIR },
+    },
 }
 
 export interface ResolvedCommand {
     command: string
     args: string[]
+    extraEnv?: Record<string, string>
 }
 
 export function resolveCommand(
@@ -76,5 +86,5 @@ export function resolveCommand(
         args.push(...extraArgs)
     }
 
-    return { command: def.command, args }
+    return { command: def.command, args, extraEnv: def.extraEnv }
 }

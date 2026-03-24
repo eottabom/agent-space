@@ -79,5 +79,7 @@ export const AGENT_ICONS: Record<string, (props: IconProps) => React.ReactNode> 
   claude: ClaudeIcon,
   codex: CodexIcon,
   gemini: GeminiIcon,
+  shell: BashIcon,
   bash: BashIcon,
+  zsh: BashIcon,
 }

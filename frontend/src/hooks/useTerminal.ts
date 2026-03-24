@@ -14,12 +14,23 @@ interface UseTerminalOptions {
 }
 
 function isTerminalResponse(dataChunk: string): boolean {
-  if (!dataChunk.startsWith('\u001b[')) {
+  if (!dataChunk.startsWith('\u001b')) {
     return false
   }
 
-  const body = dataChunk.slice(2)
-  return /^[?0-9;]*[cnR]$/.test(body)
+  // CSI responses: DA1 (\e[?...c), DSR (\e[...n), CPR (\e[...R)
+  if (dataChunk[1] === '[') {
+    const body = dataChunk.slice(2)
+    return /^[?0-9;]*[cnR]$/.test(body)
+  }
+
+  // OSC responses: color queries (\e]10;rgb:...\e\\  or  \e]10;rgb:...\x07)
+  if (dataChunk[1] === ']') {
+    const body = dataChunk.slice(2)
+    return /^\d+;/.test(body)
+  }
+
+  return false
 }
 
 export function useTerminal({ sessionId, connected, send, addHandler, onOutput }: UseTerminalOptions) {

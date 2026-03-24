@@ -170,6 +170,7 @@ function getAgentLabel(id: string): string {
     codex: 'Codex CLI',
     gemini: 'Gemini CLI',
     bash: 'Bash',
+    zsh: 'Zsh',
   }
   return names[id] || id
 }

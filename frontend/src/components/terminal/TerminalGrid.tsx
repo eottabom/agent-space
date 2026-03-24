@@ -66,6 +66,18 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
   }, [sessions, onKill])
 
   const gridRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const prevCountRef = useRef(activeSessions.length)
+
+  // Auto-scroll to bottom when a new terminal is added
+  useEffect(() => {
+    if (activeSessions.length > prevCountRef.current && scrollRef.current) {
+      requestAnimationFrame(() => {
+        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
+      })
+    }
+    prevCountRef.current = activeSessions.length
+  }, [activeSessions.length])
 
   // Ctrl+1~9 to focus terminal by index
   useEffect(() => {
@@ -143,7 +155,7 @@ export function TerminalGrid({ connected, send, addHandler, onKill }: TerminalGr
         </div>
       )}
       {/* Active terminals */}
-      <div className="flex-1 p-4 overflow-auto">
+      <div ref={scrollRef} className="flex-1 p-4 overflow-auto scrollbar-thin">
         {activeSessions.length === 0 ? (
           <div className="flex items-center justify-center h-full text-gray-600">
             <p className="text-sm">All sessions minimized</p>

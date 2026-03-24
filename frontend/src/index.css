@@ -44,6 +44,21 @@
   }
 }
 
+/* Custom scrollbar for dark theme */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #0a1018;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #1e2a3a;
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #2a3a4a;
+}
+
 /* xterm.js */
 .xterm {
   padding: 8px;

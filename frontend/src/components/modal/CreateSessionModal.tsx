@@ -24,6 +24,11 @@ export interface SessionConfig {
   args: string[]
 }
 
+const SHELL_TYPES = [
+  { id: 'bash', label: 'Bash' },
+  { id: 'zsh', label: 'Zsh' },
+] as const
+
 const AGENT_OPTIONS: Record<string, { autoApproveLabel: string; autoApproveDesc: string; debugLabel: string }> = {
   claude: {
     autoApproveLabel: 'Skip Permissions',
@@ -45,6 +50,11 @@ const AGENT_OPTIONS: Record<string, { autoApproveLabel: string; autoApproveDesc:
     autoApproveDesc: '-l flag',
     debugLabel: 'Verbose (-x)',
   },
+  zsh: {
+    autoApproveLabel: 'Login Shell',
+    autoApproveDesc: '-l flag',
+    debugLabel: 'Verbose (-x)',
+  },
 }
 
 export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, onSubmit }: CreateSessionModalProps) {
@@ -53,17 +63,20 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
   const [autoApprove, setAutoApprove] = useState(false)
   const [debug, setDebug] = useState(false)
   const [argsStr, setArgsStr] = useState('')
+  const [shellType, setShellType] = useState<string>('zsh')
 
-  const opts = AGENT_OPTIONS[agentId] || AGENT_OPTIONS.bash
-  const color = AGENT_COLORS[agentId] || '#888'
-  const agentName = getAgentName(agentId)
-  const isBash = agentId === 'bash'
+  const isShell = agentId === 'shell'
+  const effectiveAgentId = isShell ? shellType : agentId
+  const opts = AGENT_OPTIONS[effectiveAgentId] || AGENT_OPTIONS.bash
+  const color = AGENT_COLORS[effectiveAgentId] || '#888'
+  const agentName = isShell ? 'Shell' : getAgentName(agentId)
+  const isBash = isShell || agentId === 'bash'
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const args = argsStr.trim() ? argsStr.split(/\s+/).filter(Boolean) : []
     onSubmit({
-      agentId,
+      agentId: effectiveAgentId,
       workspace: 'default',
       cwd: cwd || '',
       alias: alias.trim() || '',
@@ -90,6 +103,28 @@ export function CreateSessionModal({ open, agentId, cwd: defaultCwd, onClose, on
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
+          {isShell && (
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-gray-400">Shell</label>
+              <div className="flex gap-1 w-fit">
+                {SHELL_TYPES.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setShellType(s.id)}
+                    className={`h-6 px-3 text-[11px] font-medium rounded border transition-colors ${
+                      shellType === s.id
+                        ? 'bg-[#264f78] border-blue-500/50 text-white'
+                        : 'bg-[#1a2535] border-[#2a3a4a] text-gray-400 hover:bg-[#1e2e42]'
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400">Alias</label>
             <Input
@@ -168,7 +203,9 @@ function getAgentName(id: string): string {
     claude: 'Claude Code',
     codex: 'Codex CLI',
     gemini: 'Gemini CLI',
+    shell: 'Shell',
     bash: 'Bash',
+    zsh: 'Zsh',
   }
   return names[id] || id
 }

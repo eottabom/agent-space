@@ -2,14 +2,16 @@ export const AGENTS = [
   { id: 'claude', label: 'Claude Code', color: '#D97706' },
   { id: 'codex', label: 'Codex CLI', color: '#22C55E' },
   { id: 'gemini', label: 'Gemini CLI', color: '#4285F4' },
-  { id: 'bash', label: 'Bash', color: '#A3A3A3' },
+  { id: 'shell', label: 'Shell', color: '#A3A3A3' },
 ] as const
 
 export const AGENT_COLORS: Record<string, string> = {
   claude: '#D97706',
   codex: '#22C55E',
   gemini: '#4285F4',
+  shell: '#A3A3A3',
   bash: '#A3A3A3',
+  zsh: '#A3A3A3',
 }
 
 export const ACTION_ANIMATIONS: Record<string, string> = {

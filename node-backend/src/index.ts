@@ -230,7 +230,7 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
     const shortId = sessionId.substring(0, 4)
     const sessionAlias = alias ?? `${agentId}-${shortId}`
 
-    const { command, args: cmdArgs } = resolveCommand(agentId, autoApprove, debug, args)
+    const { command, args: cmdArgs, extraEnv } = resolveCommand(agentId, autoApprove, debug, args)
     const resolvedCommand = resolveCommandPath(command)
     console.log(`[세션] 시작: ${agentId} / cwd=${cwd} / 명령어: ${resolvedCommand} ${cmdArgs.join(' ')}`)
 
@@ -241,8 +241,8 @@ function handleStart(ws: WebSocket, msg: SessionStartMsg): void {
             cols: DEFAULT_COLS,
             rows: DEFAULT_ROWS,
             cwd,
-            // 호스트 환경 변수를 그대로 상속
-            env: process.env as Record<string, string>,
+            // 호스트 환경 변수를 그대로 상속 + 에이전트별 추가 환경 변수
+            env: { ...process.env, ...extraEnv } as Record<string, string>,
         })
     } catch (err: unknown) {
         const errorMessage = err instanceof Error ? err.message : String(err)
