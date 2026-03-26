@@ -55,7 +55,14 @@ export function TerminalCard({ session, connected, send, addHandler, onKill, onM
   const commitEdit = () => {
     const trimmed = editValue.trim()
     if (trimmed && trimmed !== session.alias) {
+      // 로컬 스토어 업데이트
       dispatch({ type: 'UPDATE_SESSION', id: session.id, updates: { alias: trimmed } })
+      // 서버에 alias 업데이트 메시지 전송
+      send({
+        type: 'session:update',
+        sessionId: session.id,
+        updates: { alias: trimmed },
+      })
     }
     setEditing(false)
   }

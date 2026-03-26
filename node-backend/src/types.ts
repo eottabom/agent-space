@@ -50,6 +50,14 @@ export interface SessionReconnectMsg {
     sessionId: string
 }
 
+export interface SessionUpdateMsg {
+    type: 'session:update'
+    sessionId: string
+    updates: {
+        alias?: string
+    }
+}
+
 export interface BroadcastInputMsg {
     type: 'broadcast:input'
     data: string // base64
@@ -63,6 +71,7 @@ export type ClientMsg =
     | SessionKillMsg
     | SessionListMsg
     | SessionReconnectMsg
+    | SessionUpdateMsg
     | BroadcastInputMsg
 
 // 서버 → 클라이언트 메시지

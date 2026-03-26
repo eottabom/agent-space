@@ -16,6 +16,7 @@ import type {
     SessionResizeMsg,
     SessionKillMsg,
     SessionReconnectMsg,
+    SessionUpdateMsg,
     BroadcastInputMsg,
     ServerMsg,
 } from './types'
@@ -204,6 +205,9 @@ function handleMessage(ws: WebSocket, msg: ClientMsg): void {
         case 'session:reconnect':
             handleReconnect(ws, msg)
             break
+        case 'session:update':
+            handleUpdate(msg)
+            break
         case 'broadcast:input':
             handleBroadcastInput(msg)
             break
@@ -358,6 +362,26 @@ function handleReconnect(ws: WebSocket, msg: SessionReconnectMsg): void {
     if (session.history.length > 0) {
         const b64 = Buffer.from(session.history).toString('base64')
         sendTo(ws, { type: 'session:history', sessionId: msg.sessionId, data: b64 })
+    }
+}
+
+function handleUpdate(msg: SessionUpdateMsg): void {
+    const session = registry.get(msg.sessionId)
+    if (!session) {
+        return
+    }
+
+    if (msg.updates.alias !== undefined) {
+        session.alias = msg.updates.alias
+        // 업데이트된 세션 정보를 모든 클라이언트에 브로드캐스트
+        broadcast({
+            type: 'session:started',
+            sessionId: session.id,
+            agentId: session.agentId,
+            workspace: session.workspace,
+            cwd: session.cwd,
+            alias: session.alias,
+        })
     }
 }
 
