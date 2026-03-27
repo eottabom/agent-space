@@ -1,1 +1,181 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  <rect x="12" y="12" width="232" height="232" rx="48" fill="url(#panel)" filter="url(#innerShadow)"/>
+  <rect x="12.5" y="12.5" width="231" height="231" rx="47.5" stroke="rgba(255,255,255,0.08)"/>
+
+  <!-- Ambient glow behind monitor -->
+  <ellipse cx="128" cy="115" rx="85" ry="70" fill="url(#ambientGlow)" opacity="0.7" filter="url(#glowBlur)"/>
+
+  <!-- Monitor body -->
+  <g filter="url(#monitorDrop)">
+    <!-- Screen bezel -->
+    <rect x="46" y="42" width="164" height="126" rx="14" fill="url(#bezelGrad)"/>
+    <rect x="46" y="42" width="164" height="126" rx="14" stroke="url(#bezelEdge)" stroke-width="2.5"/>
+
+    <!-- Screen -->
+    <rect x="56" y="52" width="144" height="106" rx="8" fill="url(#screenBg)"/>
+    <!-- Screen subtle inner glow -->
+    <rect x="56" y="52" width="144" height="106" rx="8" fill="url(#screenGlow)" opacity="0.2"/>
+
+    <!-- Terminal lines - vivid bright colors -->
+    <!-- Line 1 -->
+    <rect x="72" y="70" width="12" height="5" rx="2.5" fill="#5EEAD4"/>
+    <rect x="88" y="70" width="56" height="5" rx="2.5" fill="#BAE6FD" opacity="0.9"/>
+
+    <!-- Line 2 -->
+    <rect x="72" y="83" width="12" height="5" rx="2.5" fill="#5EEAD4"/>
+    <rect x="88" y="83" width="80" height="5" rx="2.5" fill="#DDD6FE" opacity="0.85"/>
+
+    <!-- Line 3 -->
+    <rect x="72" y="96" width="12" height="5" rx="2.5" fill="#5EEAD4"/>
+    <rect x="88" y="96" width="44" height="5" rx="2.5" fill="#A5F3FC" opacity="0.8"/>
+    <rect x="136" y="96" width="32" height="5" rx="2.5" fill="#C4B5FD" opacity="0.6"/>
+
+    <!-- Line 4: active -->
+    <rect x="72" y="109" width="12" height="5" rx="2.5" fill="#5EEAD4"/>
+    <rect x="88" y="109" width="34" height="5" rx="2.5" fill="#F0ABFC" opacity="0.75"/>
+    <!-- Cursor -->
+    <rect x="126" y="107" width="3.5" height="10" rx="1.75" fill="white"/>
+    <rect x="126" y="107" width="3.5" height="10" rx="1.75" fill="#67E8F9" opacity="0.8" filter="url(#cursorGlow)"/>
+
+    <!-- Line 5 -->
+    <rect x="72" y="124" width="64" height="5" rx="2.5" fill="#A5B4FC" opacity="0.5"/>
+    <rect x="72" y="137" width="48" height="5" rx="2.5" fill="#A5B4FC" opacity="0.35"/>
+
+    <!-- Screen reflection -->
+    <rect x="56" y="52" width="144" height="44" rx="8" fill="url(#screenReflect)" opacity="0.15"/>
+
+    <!-- Screen border glow -->
+    <rect x="56.5" y="52.5" width="143" height="105" rx="7.5" stroke="url(#screenEdge)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Monitor stand -->
+  <path d="M114 172L109 192H147L142 172" fill="url(#standGrad)"/>
+  <path d="M114 172L109 192H147L142 172" stroke="url(#standEdge)" stroke-width="1.5" fill="none"/>
+
+  <!-- Stand base -->
+  <ellipse cx="128" cy="195" rx="34" ry="6.5" fill="url(#baseGrad)"/>
+  <ellipse cx="128" cy="195" rx="34" ry="6.5" stroke="url(#standEdge)" stroke-width="1" fill="none"/>
+
+  <!-- Floating mini windows -->
+  <!-- Window 1 (right) -->
+  <g opacity="0.6">
+    <rect x="176" y="36" width="46" height="34" rx="6" fill="rgba(26,23,64,0.9)" stroke="#C4B5FD" stroke-width="1.5"/>
+    <rect x="181" y="43" width="24" height="3" rx="1.5" fill="#DDD6FE" opacity="0.8"/>
+    <rect x="181" y="50" width="18" height="3" rx="1.5" fill="#E9D5FF" opacity="0.6"/>
+    <rect x="181" y="57" width="12" height="3" rx="1.5" fill="#C4B5FD" opacity="0.5"/>
+  </g>
+
+  <!-- Window 2 (left) -->
+  <g opacity="0.45">
+    <rect x="30" y="46" width="42" height="30" rx="6" fill="rgba(26,23,64,0.9)" stroke="#93C5FD" stroke-width="1.5"/>
+    <rect x="35" y="53" width="20" height="3" rx="1.5" fill="#BAE6FD" opacity="0.8"/>
+    <rect x="35" y="60" width="16" height="3" rx="1.5" fill="#A5F3FC" opacity="0.6"/>
+  </g>
+
+  <!-- Power indicator -->
+  <circle cx="128" cy="48" r="2.5" fill="#34D399" opacity="0.9"/>
+  <circle cx="128" cy="48" r="2.5" fill="#34D399" opacity="0.4" filter="url(#gemGlow)"/>
+
+  <!-- Corner gems -->
+  <circle cx="76" cy="216" r="4" fill="#67E8F9" filter="url(#gemGlow)"/>
+  <circle cx="180" cy="216" r="4" fill="#C4B5FD" filter="url(#gemGlow)"/>
+
+  <defs>
+    <linearGradient id="bg" x1="20" y1="10" x2="240" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A0A1A"/>
+      <stop offset="0.5" stop-color="#0F0D1F"/>
+      <stop offset="1" stop-color="#080812"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="30" y1="20" x2="230" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#181535"/>
+      <stop offset="0.5" stop-color="#131028"/>
+      <stop offset="1" stop-color="#0D0B1C"/>
+    </linearGradient>
+
+    <!-- Bezel - lighter purple -->
+    <linearGradient id="bezelGrad" x1="46" y1="42" x2="210" y2="168" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4C4490"/>
+      <stop offset="0.4" stop-color="#3B3570"/>
+      <stop offset="1" stop-color="#2D285A"/>
+    </linearGradient>
+    <linearGradient id="bezelEdge" x1="46" y1="42" x2="210" y2="168" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A5F3FC" stop-opacity="0.7"/>
+      <stop offset="0.35" stop-color="#BAE6FD" stop-opacity="0.6"/>
+      <stop offset="0.7" stop-color="#DDD6FE" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#F5D0FE" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- Screen -->
+    <linearGradient id="screenBg" x1="56" y1="52" x2="200" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#161430"/>
+      <stop offset="1" stop-color="#100E24"/>
+    </linearGradient>
+    <linearGradient id="screenGlow" x1="128" y1="52" x2="128" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+    <linearGradient id="screenReflect" x1="128" y1="52" x2="128" y2="96" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="screenEdge" x1="56" y1="52" x2="200" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67E8F9" stop-opacity="0.4"/>
+      <stop offset="0.5" stop-color="#A5B4FC" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#E9D5FF" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <!-- Stand -->
+    <linearGradient id="standGrad" x1="128" y1="172" x2="128" y2="192" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4C4490"/>
+      <stop offset="1" stop-color="#3B3570"/>
+    </linearGradient>
+    <linearGradient id="standEdge" x1="128" y1="172" x2="128" y2="195" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BAE6FD" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#DDD6FE" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="baseGrad" x1="94" y1="195" x2="162" y2="195" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67E8F9" stop-opacity="0.25"/>
+      <stop offset="0.5" stop-color="#3B3570"/>
+      <stop offset="1" stop-color="#C4B5FD" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <radialGradient id="ambientGlow" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop stop-color="#818CF8" stop-opacity="0.45"/>
+      <stop offset="0.4" stop-color="#60A5FA" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="innerShadow" x="-4" y="0" width="264" height="264" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="6"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1" result="shape"/>
+    </filter>
+    <filter id="glowBlur" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16"/>
+    </filter>
+    <filter id="monitorDrop" x="30" y="30" width="196" height="160" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="6"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0 0.3 0 0 0 0.5 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="drop"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="drop" result="shape"/>
+    </filter>
+    <filter id="cursorGlow" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+    </filter>
+    <filter id="gemGlow" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+    </filter>
+  </defs>
+</svg>
