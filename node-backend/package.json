@@ -1,6 +1,6 @@
 {
   "name": "agent-space-node-backend",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "Node.js backend for Agent Space — replaces Java/Spring Boot",
   "main": "dist/electron.js",
   "scripts": {
