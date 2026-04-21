@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   esbuild: {
     minifyIdentifiers: false
-  }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
