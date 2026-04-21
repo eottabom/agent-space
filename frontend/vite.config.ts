@@ -4,8 +4,8 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  esbuild: {
-    minifyIdentifiers: false
+  build: {
+    minify: 'terser',
   },
   resolve: {
     alias: {
